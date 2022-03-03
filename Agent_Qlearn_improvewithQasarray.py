@@ -12,7 +12,7 @@ class Agent(object):
         self.reward = 0
         self.done = False
         self.action = ['l','r','u','d']
-        self.Q = {}
+        self.Q = np.zeros((20,20,20,20, len(self.action)))
         self.alpha = 0.1
         self.gamma = 0.9
         self.epsilon = 0.1
@@ -48,27 +48,25 @@ class Agent(object):
             return self.choose_best_action()
     
     def choose_best_action(self):
-        max_q = -float('inf')
-        best_action = None
-        for action in self.action:
-            q = self.Q.get((self.state, action))
-            if q is None : q = 0
-            if q >= max_q:
-                max_q = q
-                best_action = action
-        return best_action
+            max_q = -float('inf')
+            best_action = None
+            for action in self.action:
+                q = self.Q[self.state[0],self.state[1], self.state[2], self.state[3] , self.action.index(action)]
+                if q >= max_q:
+                    max_q = q
+                    best_action = action
+            return best_action
     
     def update_q_table(self, action, reward, next_state):
-        q = self.Q.get((self.state, action))
+        q = self.Q[self.state[0],self.state[1], self.state[2], self.state[3] , self.action.index(action)]
         if q is None:
-            self.Q[(self.state, action)] = reward
+            self.Q[self.state[0],self.state[1], self.state[2], self.state[3] , self.action.index(action)]= reward
         else:
-            self.Q[(self.state, action)] = q + self.alpha * (reward + self.gamma * self.get_max_q(next_state) - q)
-            
+            self.Q[self.state[0],self.state[1], self.state[2], self.state[3] , self.action.index(action)] = q + self.alpha * (reward + self.gamma * self.get_max_q(next_state) - q)
     def get_max_q(self, state):
         max_q = -float('inf')
         for action in self.action:
-            q = self.Q.get((state, action), 0)
+            q = self.Q[self.state[0],self.state[1], self.state[2], self.state[3] , self.action.index(action)]
             if q >= max_q:
                 max_q = q
         return max_q

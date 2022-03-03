@@ -15,10 +15,11 @@ class environment:
     self.writer = Turtle(visible = False)
 
     self.aim = vector(5, 0)
-    self.pacman = vector(-20, -40) # -40, -80
+    self.pacman = vector(-10, -40) # -40, -80
     self.done = False
-    #self.ghosts = [
-    #    [vector(-180, 160), vector(5,0)],
+    self.ghosts = [
+        [vector(0, 0), vector(5,0)],
+    ]
     #    [vector(-180, 160), vector(0,5)],
     #    [vector(100, 160), vector(0, -5)],
     #    [vector(100, -160), vector(-5, 0)]
@@ -27,11 +28,11 @@ class environment:
     self.tilesinit = [
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
-        0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-        0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-        0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-        0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
-        0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+        0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+        0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+        0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+        0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
+        0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0,
         0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
@@ -214,15 +215,16 @@ class environment:
     self.writer.color('white')
     self.writer.write(self.state['score'])
     self.aim = vector(5, 0)
-    self.pacman = vector(-20, 40)
+    self.pacman = vector(-10, 40)
     self.done = False
-    #self.ghosts = [
-    #    [vector(-180, 160), vector(5,0)],
+    self.ghosts = [
+        [vector(0, 40), vector(5,0)],
+    ]
     #    [vector(-180, 160), vector(0,5)],
     #    [vector(100, 160), vector(0, -5)],
     #    [vector(100, -160), vector(-5, 0)]
     #    ]
-    self.ghosts = []
+    #self.ghosts = []
     self.tiles = self.tilesinit.copy()
     pos_pacman = self.offset(self.pacman)
     obs_space = self.tiles.copy()
