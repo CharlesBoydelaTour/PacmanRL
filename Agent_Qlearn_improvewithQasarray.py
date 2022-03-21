@@ -3,6 +3,8 @@ import pickle
 from turtle import *
 from environment import environment
 import numpy as np
+import matplotlib.pyplot as plt
+import time
 
 class Agent(object):
     def __init__(self, env):
@@ -40,6 +42,16 @@ class Agent(object):
             dy_ghost = y_player - y_ghost[closest_ghost]
             self.state = (dx_coin[0], dy_coin[0], dx_ghost[0], dy_ghost[0])
         else : self.state = (0, 0, 0, 0)
+    
+    def modedifiedstate2(self):
+    #return the 9 cases around pacman
+        self.statemod = np.array(self.state)
+        self.statemod = self.statemod.reshape((int(len(self.state)/20), 20))
+        y_player, x_player = np.where(self.statemod == 3)
+        #find values around player
+        if len(x_player) > 0:
+            self.state = self.statemod[y_player[0]-1:y_player[0]+2, x_player[0]-1:x_player[0]+2].flatten()
+        else : [0,0,0,0,0,0,0,0,0]
         
     def get_action(self):
         if random.uniform(0,1) < self.epsilon:
@@ -63,6 +75,7 @@ class Agent(object):
             self.Q[self.state[0],self.state[1], self.state[2], self.state[3] , self.action.index(action)]= reward
         else:
             self.Q[self.state[0],self.state[1], self.state[2], self.state[3] , self.action.index(action)] = q + self.alpha * (reward + self.gamma * self.get_max_q(next_state) - q)
+    
     def get_max_q(self, state):
         max_q = -float('inf')
         for action in self.action:
@@ -76,6 +89,7 @@ class Agent(object):
             while True:
                 action = self.get_action()
                 next_state, reward, done = self.env.step(action)
+                #reward = reward - 0.01*(self.state[0]**2 + self.state[1]**2) + 0.01*(self.state[2]**2 + self.state[3]**2)
                 self.update_q_table(action, reward, next_state)
                 self.state = next_state
                 self.modedifiedstate() #
@@ -83,17 +97,49 @@ class Agent(object):
                 self.count += 1
                 if self.count >= 500: done = True
                 if done:
+                    clear()
+                    setup(420, 420, 370, 0)
+                    hideturtle()
+                    tracer(False)
                     self.episodes += 1
                     self.reward_history.append(self.total_reward)
                     self.epsilon = 1 / self.episodes
                     self.state = self.env.reset()
                     self.modedifiedstate() #
-                    self.count = 0
+                    average_reward = self.total_reward/self.count
                     done = False
-                    print("train number:{} - reward : {}".format(train, self.total_reward))
+                    print("train number:{} - reward : {} - step:{}".format(train, average_reward, self.count))
                     self.total_reward = 0
+                    self.count = 0
                     break
         return self.reward_history, self.Q
+    
+    def load_Q(self, Q):
+            self.Q = Q
+        
+    def test(self):
+            self.epsilon = 0.0
+            while True:
+                action = self.choose_best_action()
+                next_state, reward, done = self.env.step(action)
+                #reward = reward - 0.01*(self.state[0]**2 + self.state[1]**2) + 0.01*(self.state[2]**2 + self.state[3]**2)
+                self.state = next_state
+                time.sleep(0.2)
+                self.modedifiedstate() #
+                self.total_reward += reward
+                self.count += 1
+                if done:
+                    self.episodes += 1
+                    self.reward_history.append(self.total_reward)
+                    self.epsilon = 1 / self.episodes
+                    self.state = self.env.reset()
+                    self.modedifiedstate() #
+                    average_reward = self.total_reward/self.count
+                    self.count = 0
+                    done = False
+                    print("reward : {}".format(average_reward))
+                    self.total_reward = 0
+                    break
     
 if __name__ == '__main__':    
     setup(420, 420, 370, 0)
@@ -101,7 +147,14 @@ if __name__ == '__main__':
     tracer(False)
     env = environment()
     agent = Agent(env)
-    rewaesn, Q = agent.run()
-
-    with open('qvalues.pickle', 'wb') as handle:
-        pickle.dump(Q, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    #rewaesn, Q = agent.run()
+    #plt.plot(rewaesn)
+    #plt.show()
+    #with open('qvalues.pickle', 'wb') as handle:
+    #    pickle.dump(Q, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    file = open('qvalues.pickle','rb')
+    Q = pickle.load(file)
+    file.close()
+    clear()
+    agent.load_Q(Q)
+    agent.test()
