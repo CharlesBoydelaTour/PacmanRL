@@ -20,6 +20,9 @@
   - [IV.Discussion and results](#ivdiscussion-and-results)
     - [Simple Maze state distance approach](#simple-maze-state-distance-approach)
     - [Simple Maze close view approach](#simple-maze-close-view-approach)
+    - [Complex Maze state distance approach](#complex-maze-state-distance-approach)
+    - [Complex Maze close view approach](#complex-maze-close-view-approach)
+  - [V.Conclusion and next steps](#vconclusion-and-next-steps)
 - [Additional](#additional)
   - [🏁 Getting Started](#-getting-started)
   - [🔧 Running tests](#-running-tests)
@@ -109,6 +112,53 @@ In the close view approach, the agent as only access to the values of the nearby
 </p>
 
 As can be seen on the total reward other epoch graph above, the agent still achieves max scores, and do so faster than the first approach.
+
+### Complex Maze state distance approach
+
+In the complex maze example, we are adding on line to the maze (note the ghost can not go in this line). This leads to some additional complexity since now our agent can wait indefinitely in this line without the fear of being eaten by the ghost.
+
+<p align="center">
+  <a href="/Simple%20Maze/State%20distance/simplemaze-distances.gif" rel="noopener">
+ <img width=300px height=200px src="./Complex%20Maze/State%20distance/complexmaze-distances.gif" alt="GAME"></a>
+</p>
+
+For the state distance approach, this leads to similar results where there is a high number of unvisited states, and the agent tends to get stuck, but with a good understanding of the ghost risk.
+
+<p align="center">
+  <a href="/Simple%20Maze/State%20distance/simplemaze-distances.gif" rel="noopener">
+ <img width=320px height=240px src="./Complex%20Maze/State%20distance/complexmap-800steps.png" alt="Reward"></a>
+</p>
+From the reward graph, we can see that a higher number of training is required to achieve similar results, with only a few games reaching the maximum number of points.
+
+### Complex Maze close view approach
+
+<p align="center">
+  <a href="/Simple%20Maze/State%20distance/simplemaze-distances.gif" rel="noopener">
+ <img width=300px height=200px src="./Complex%20Maze/State%20Close%20Vision/complexmaze-closevision.gif" alt="GAME"></a>
+</p>
+
+With the complex approach, the agent has the same difficulties as in the simple maze. If the ghost get to close, the available window to fly away is really small. 
+
+However, it seems to have a better scaling compare to the other approach. Indeed, looking at the reward graph, we can see that the agent reaches the maximum number of points quite often.
+
+<p align="center">
+  <a href="/Simple%20Maze/State%20distance/simplemaze-distances.gif" rel="noopener">
+ <img width=320px height=240px src="./Complex%20Maze/State%20Close%20Vision/Figure_1.png" alt="Reward"></a>
+</p>
+
+## V.Conclusion and next steps
+
+In conclusion, due to the size of the possible states, especially with a high number of ghosts, solving the PacMan game is not an easy RL task. 
+A good representation of these states is a key to achieve an efficient training for the agent.
+We have tried to of this representation : minimal distances, and close view. 
+These two approaches led to really different results, with their own limitations. 
+
+- Minimal distances seems to get stuck at some positions probably due to an high number of states to explore and ambiguity between the distances. It had a lot of difficulties to scale to a maze with increasing complexity.
+- Close view achieved a faster training and a better scaling in increaing complexity but has issues in escaping the ghost.
+  
+To go further, a combination of these 2 methods, with for example the absolute distances and the close view could improve the performance of the agent.
+Other algorithm such as SARSA could also be used and could lead to better performance during the training process.
+
 
 # Additional
 
