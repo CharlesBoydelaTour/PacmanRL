@@ -99,12 +99,13 @@ As can be seen in our second impletentation, adding a ghost tends to "unblock" o
 The graph above reprents the total rewards over each trained game for the simple maze with state distance approach agent. We can see that after 75 games, the reward fluctuates. The agent is still dependent on the movements of the ghost which may lead to unseen states. However, it achieved the maximum number of points/rewards (500) more and more frequently as we increase the training time.
 
 ### Simple Maze close view approach
+
 <p align="center">
   <a href="/Simple%20Maze/State%20distance/simplemaze-distances.gif" rel="noopener">
  <img width=300px height=200px src="./Simple%20Maze/State%20Close%20Vision/simplemaze-closevision.gif" alt="GAME"></a>
 </p>
 
-In the close view approach, the agent as only access to the values of the nearby blocks. It did not get stuck as the first state, but since the player only see the ghosts when it is at one block, it as only a small room for maneuver.  
+In the close view approach, the agent as only access to the values of the nearby blocks. It did not get stuck as the first state, but since the player only see the ghosts when it is at one block, it as only a small room for maneuver.
 
 <p align="center">
   <a href="/Simple%20Maze/State%20distance/simplemaze-distances.gif" rel="noopener">
@@ -137,7 +138,7 @@ From the reward graph, we can see that a higher number of training is required t
  <img width=300px height=200px src="./Complex%20Maze/State%20Close%20Vision/complexmaze-closevision.gif" alt="GAME"></a>
 </p>
 
-With the complex approach, the agent has the same difficulties as in the simple maze. If the ghost get to close, the available window to fly away is really small. 
+With the complex approach, the agent has the same difficulties as in the simple maze. If the ghost get to close, the available window to fly away is really small.
 
 However, it seems to have a better scaling compare to the other approach. Indeed, looking at the reward graph, we can see that the agent reaches the maximum number of points quite often.
 
@@ -148,17 +149,16 @@ However, it seems to have a better scaling compare to the other approach. Indeed
 
 ## V.Conclusion and next steps
 
-In conclusion, due to the size of the possible states, especially with a high number of ghosts, solving the PacMan game is not an easy RL task. 
+In conclusion, due to the size of the possible states, especially with a high number of ghosts, solving the PacMan game is not an easy RL task.
 A good representation of these states is a key to achieve an efficient training for the agent.
-We have tried to of this representation : minimal distances, and close view. 
-These two approaches led to really different results, with their own limitations. 
+We have tried two of these representations : minimal distances, and close view.
+These two approaches led to really different results, with their own advantages and limits.
 
-- Minimal distances seems to get stuck at some positions probably due to an high number of states to explore and ambiguity between the distances. It had a lot of difficulties to scale to a maze with increasing complexity.
-- Close view achieved a faster training and a better scaling in increaing complexity but has issues in escaping the ghost.
-  
+- Minimal distances seems to get stuck at some positions, probably due to the high number of states to explore and ambiguity between the distances. It had a lot of difficulties to scale to a maze with increasing complexity.
+- Close view achieved a faster training and a better scaling in increaing complexity but had issues in escaping the ghost.
+
 To go further, a combination of these 2 methods, with for example the absolute distances and the close view could improve the performance of the agent.
 Other algorithm such as SARSA could also be used and could lead to better performance during the training process.
-
 
 # Additional
 
