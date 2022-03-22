@@ -19,6 +19,7 @@
   - [III.The agent](#iiithe-agent)
   - [IV.Discussion and results](#ivdiscussion-and-results)
     - [Simple Maze state distance approach](#simple-maze-state-distance-approach)
+    - [Simple Maze close view approach](#simple-maze-close-view-approach)
 - [Additional](#additional)
   - [🏁 Getting Started](#-getting-started)
   - [🔧 Running tests](#-running-tests)
@@ -85,7 +86,7 @@ Our first implementation is a simple maze with no ghost. As can be seen above on
  <img width=300px height=200px src="./Simple%20Maze/State%20distance/simplemaze-distances.gif" alt="GAME"></a>
 </p>
 
-As can be seen in our second impletentation, adding a ghost tends to "unblock" our agent. Indeed, the agent learns quickly to escape from the ghost when it get too close.
+As can be seen in our second impletentation, adding a ghost tends to "unblock" our agent. Indeed, the agent learns quickly to escape from the ghost when it gets too close.
 
 <p align="center">
   <a href="/Simple%20Maze/State%20distance/simplemaze-distances.gif" rel="noopener">
@@ -93,6 +94,21 @@ As can be seen in our second impletentation, adding a ghost tends to "unblock" o
 </p>
 
 The graph above reprents the total rewards over each trained game for the simple maze with state distance approach agent. We can see that after 75 games, the reward fluctuates. The agent is still dependent on the movements of the ghost which may lead to unseen states. However, it achieved the maximum number of points/rewards (500) more and more frequently as we increase the training time.
+
+### Simple Maze close view approach
+<p align="center">
+  <a href="/Simple%20Maze/State%20distance/simplemaze-distances.gif" rel="noopener">
+ <img width=300px height=200px src="./Simple%20Maze/State%20Close%20Vision/simplemaze-closevision.gif" alt="GAME"></a>
+</p>
+
+In the close view approach, the agent as only access to the values of the nearby blocks. It did not get stuck as the first state, but since the player only see the ghosts when it is at one block, it as only a small room for maneuver.  
+
+<p align="center">
+  <a href="/Simple%20Maze/State%20distance/simplemaze-distances.gif" rel="noopener">
+ <img width=320px height=240px src="./Simple%20Maze/State%20Close%20Vision/Figure_1.png" alt="Reward"></a>
+</p>
+
+As can be seen on the total reward other epoch graph above, the agent still achieves max scores, and do so faster than the first approach.
 
 # Additional
 
