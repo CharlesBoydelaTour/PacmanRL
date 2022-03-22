@@ -93,7 +93,7 @@ class Agent(object):
         return max_q
     
     def run(self):
-        for train in range(400):
+        for train in range(800):
             while True:
                 action = self.get_action()
                 next_state, reward, done = self.env.step(action)
@@ -154,14 +154,14 @@ if __name__ == '__main__':
     tracer(False)
     env = environment()
     agent = Agent(env)
-    rewaesn, Q = agent.run()
-    plt.plot(rewaesn)
-    plt.show()
-    with open('qvalues.pickle', 'wb') as handle:
-        pickle.dump(Q, handle, protocol=pickle.HIGHEST_PROTOCOL)
-    #file = open('qvalues.pickle','rb')
-    #Q = pickle.load(file)
-    #file.close()
-    #clear()
-    #agent.load_Q(Q)
-    #agent.test()
+    #rewaesn, Q = agent.run()
+    #plt.plot(rewaesn)
+    #plt.show()
+    #with open('qvalues.pickle', 'wb') as handle:
+    #    pickle.dump(Q, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    file = open('qvalues.pickle','rb')
+    Q = pickle.load(file)
+    file.close()
+    clear()
+    agent.load_Q(Q)
+    agent.test()

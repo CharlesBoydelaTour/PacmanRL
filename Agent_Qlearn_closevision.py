@@ -73,7 +73,7 @@ class Agent(object):
         return max_q
     
     def run(self):
-        for train in range(100):
+        for train in range(800):
             while True:
                 action = self.get_action()
                 next_state, reward, done = self.env.step(action)
