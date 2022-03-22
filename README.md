@@ -18,11 +18,13 @@
   - [II.The environment](#iithe-environment)
   - [III.The agent](#iiithe-agent)
   - [IV.Discussion and results](#ivdiscussion-and-results)
+    - [Simple Maze state distance approach](#simple-maze-state-distance-approach)
 - [Additional](#additional)
   - [🏁 Getting Started](#-getting-started)
   - [🔧 Running tests](#-running-tests)
   - [✍️ Authors](#️-authors)
   - [🎉 Acknowledgements](#-acknowledgements)
+
 # REPORT
 
 ## I.Introduction and motivation
@@ -68,6 +70,29 @@ The agent learns the action-value function through Q-Learning. A state-action pa
 It is an off-policy temporal difference control algorithm which approximates the optimal action-value function of the system.
 
 ## IV.Discussion and results
+
+### Simple Maze state distance approach
+
+<p align="center">
+  <a href="/Simple%20Maze/State%20distance/simplemaze-distances.gif" rel="noopener">
+ <img width=300px height=200px src="./Simple%20Maze/State%20distance/noghost/simplemaze-distances-noghost.gif" alt="GAME"></a>
+</p>
+
+Our first implementation is a simple maze with no ghost. As can be seen above on the final game after 200 training games, the player seems to be stucked when it reaches a position which is at an equal distance from 2 closest unseen positions. This lead to an unpredictable behaviour of the agent, which at some points during the learning, finished the game without any difficulties, whereas it tends to break afterwards.
+
+<p align="center">
+  <a href="/Simple%20Maze/State%20distance/simplemaze-distances.gif" rel="noopener">
+ <img width=300px height=200px src="./Simple%20Maze/State%20distance/simplemaze-distances.gif" alt="GAME"></a>
+</p>
+
+As can be seen in our second impletentation, adding a ghost tends to "unblock" our agent. Indeed, the agent learns quickly to escape from the ghost when it get too close.
+
+<p align="center">
+  <a href="/Simple%20Maze/State%20distance/simplemaze-distances.gif" rel="noopener">
+ <img width=320px height=240px src="./Simple%20Maze/State%20distance/simplifiedmap-200steps.png" alt="Reward"></a>
+</p>
+
+The graph above reprents the total rewards over each trained game for the simple maze with state distance approach agent. We can see that after 75 games, the reward fluctuates. The agent is still dependent on the movements of the ghost which may lead to unseen states. However, it achieved the maximum number of points/rewards (500) more and more frequently as we increase the training time.
 
 # Additional
 
